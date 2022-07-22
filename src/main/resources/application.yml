@@ -19,3 +19,6 @@ rabbitmq:
   username: ${AMQP_USER:}
   password: ${AMQP_PASS}
   virtual-host: ${AMQP_VHOST:/}
+
+extractor:
+  extraction-task-queue: ${EXTRACTION_TASK_QUEUE}

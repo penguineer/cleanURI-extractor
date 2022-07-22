@@ -28,6 +28,16 @@ public class AmazonExtractor implements Extractor {
 	}
 
 	@Override
+	public boolean isSuitable(URI uri) {
+		if (uri == null)
+			throw new IllegalArgumentException("URI argument must not be null!");
+
+		final String authority = uri.getAuthority();
+
+		return authority != null && authority.endsWith("amazon.de");
+	}
+
+	@Override
 	public Map<Metakey, String> extractMetadata(URI uri) throws ExtractorException {
 		if (uri == null)
 			throw new NullPointerException("URI argument must not be null!");

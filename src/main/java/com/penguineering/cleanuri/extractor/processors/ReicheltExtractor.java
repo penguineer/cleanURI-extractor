@@ -17,6 +17,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
+import ru.lanwen.verbalregex.VerbalExpression;
 
 /**
  * Meta-data extractor for Reichelt catalog data.
@@ -24,6 +25,24 @@ import org.jsoup.select.Elements;
 @Bean
 public class ReicheltExtractor implements Extractor {
 	public static final String PREFIX = "http://www.reichelt.de/index.html?ARTICLE=";
+
+	static final VerbalExpression artidRegex = VerbalExpression.regex().startOfLine().then("http").anything()
+			.then("://www.reichelt.de/").anything().then("-p").capture().anything().endCapture().then(".html")
+			.anything().endOfLine().build();
+
+	static final VerbalExpression artidRegex2 = VerbalExpression.regex().startOfLine().then("http").anything()
+			.then("://www.reichelt.de/index.html?ARTICLE=").capture().anything().endCapture().endOfLine().build();
+
+	@Override
+	public boolean isSuitable(URI uri) {
+		if (uri == null)
+			throw new IllegalArgumentException("URI argument must not be null!");
+
+		final String authority = uri.getAuthority();
+
+		return authority != null && authority.endsWith("reichelt.de") &&
+				(artidRegex.test(uri.toASCIIString()) || artidRegex2.test(uri.toASCIIString()));
+	}
 
 	@Override
 	public Map<Metakey, String> extractMetadata(URI uri) throws ExtractorException {

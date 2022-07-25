@@ -1,11 +1,10 @@
 package com.penguineering.cleanuri.extractor.amqp;
 
+import com.penguineering.cleanuri.common.amqp.ExtractionTaskEmitter;
+import com.penguineering.cleanuri.common.message.ExtractionTask;
+import com.penguineering.cleanuri.common.message.MetaData;
 import com.penguineering.cleanuri.extractor.processors.Extractor;
 import com.penguineering.cleanuri.extractor.processors.ExtractorException;
-import com.penguineering.cleanuri.extractor.processors.Metakey;
-import com.penguineering.cleanuri.extractor.tasks.ErrorResult;
-import com.penguineering.cleanuri.extractor.tasks.ExtractionResult;
-import com.penguineering.cleanuri.extractor.tasks.ExtractionTask;
 import io.micronaut.rabbitmq.annotation.Queue;
 import io.micronaut.rabbitmq.annotation.RabbitListener;
 import io.micronaut.rabbitmq.annotation.RabbitProperty;
@@ -20,10 +19,7 @@ import java.util.Optional;
 @RabbitListener
 public class ExtractionTaskHandler {
     @Inject
-    ErrorEmitter errorEmitter;
-
-    @Inject
-    ExtractionResultEmitter extractionResultEmitter;
+    ExtractionTaskEmitter emitter;
 
     @Inject
     List<Extractor> extractors;
@@ -33,34 +29,32 @@ public class ExtractionTaskHandler {
                         @RabbitProperty("replyTo") String replyTo,
                         final ExtractionTask task,
                         RabbitAcknowledgement acknowledgement) {
-        final URI uri = task.getReduced_uri();
-        final ExtractionResult.Builder extractionResultBuilder = ExtractionResult.Builder.fromExtractionTask(task);
+        final ExtractionTask.Builder taskBuilder = ExtractionTask.Builder.copy(task);
 
-        if (task.getMeta() != null && !task.getMeta().isEmpty()) {
+
+        final URI uri = task.getCanonizedURI();
+
+        if (!task.getRequest().getFields().isEmpty()) {
             Optional<Extractor> extractor = extractors.stream()
                     .filter(e -> e.isSuitable(uri))
                     .findFirst();
 
             if (extractor.isPresent()) {
                 try {
-                    final Map<Metakey, String> meta = extractor.get().extractMetadata(uri);
-                    extractionResultBuilder.putAllMeta(meta);
-                } catch (ExtractorException e) {
-                    errorEmitter.send(correlationId, replyTo, new ErrorResult(
-                            400, e.getMessage()
+                    final Map<MetaData.Fields, String> meta = extractor.get().extractMetadata(uri);
+                    meta.forEach((key, value) -> taskBuilder.putMeta(
+                            key,
+                            MetaData.Builder.withValue(value).instance()
                     ));
+                } catch (ExtractorException e) {
+                    taskBuilder.addError(e.getMessage());
                 }
             } else {
-                // This should not happen!
-                errorEmitter.send(correlationId, replyTo, new ErrorResult(
-                        404, "Could not find a matching extractor!"
-                ));
+                taskBuilder.addError("Could not find a matching extractor!");
             }
         }
 
-        // send the result even if the extraction failed
-        // we still have the reduction and the HTTP endpoint will already have failed and ignores this
-        extractionResultEmitter.send(correlationId, replyTo, extractionResultBuilder.instance());
+        emitter.send(replyTo, correlationId, null, taskBuilder.instance());
 
         acknowledgement.ack();
     }

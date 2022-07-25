@@ -45,8 +45,16 @@ jobs:
           distribution: 'adopt'
           cache: 'maven'
 
+      - name: Maven Settings
+        uses: s4u/maven-settings-action@v2
+        with:
+          servers: '[{"id": "github", "username": "penguineer", "password": "${GITHUB_TOKEN_REF}"}]'
+          githubServer: false
+
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots clean package
+        env:
+          GITHUB_TOKEN_REF: ${{ secrets.GH_MAVEN_TOKEN }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1

@@ -1,5 +1,7 @@
 package com.penguineering.cleanuri.extractor.processors;
 
+import com.penguineering.cleanuri.common.message.MetaData;
+
 import java.net.URI;
 import java.util.Map;
 
@@ -30,5 +32,5 @@ public interface Extractor {
          * @throws IllegalArgumentException
          *             if the URI is not suitable for use with this extractor.
          */
-	public Map<Metakey, String> extractMetadata(URI uri) throws ExtractorException;
+	Map<MetaData.Fields, String> extractMetadata(URI uri) throws ExtractorException;
 }

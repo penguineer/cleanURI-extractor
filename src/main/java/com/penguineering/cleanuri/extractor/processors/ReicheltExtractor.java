@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import com.penguineering.cleanuri.common.message.MetaData;
 import io.micronaut.context.annotation.Bean;
 import org.apache.commons.lang3.StringEscapeUtils;
 
@@ -45,7 +46,7 @@ public class ReicheltExtractor implements Extractor {
 	}
 
 	@Override
-	public Map<Metakey, String> extractMetadata(URI uri) throws ExtractorException {
+	public Map<MetaData.Fields, String> extractMetadata(URI uri) throws ExtractorException {
 		if (uri == null)
 			throw new NullPointerException("URI argument must not be null!");
 
@@ -77,7 +78,7 @@ public class ReicheltExtractor implements Extractor {
 			throw new IllegalArgumentException("Could not convert provided URL to https scheme!", e);
 		}
 
-		Map<Metakey, String> meta = new HashMap<>();
+		Map<MetaData.Fields, String> meta = new HashMap<>();
 
 		try {
 			final Document doc = Jsoup.connect(url.toExternalForm()).get();
@@ -85,11 +86,11 @@ public class ReicheltExtractor implements Extractor {
 			final Elements articleHeader = doc.select("#av_articleheader h2");
 			final Optional<TextNode> articleId = articleHeader.textNodes().stream().findFirst();
 			if (articleId.isPresent())
-				meta.put(Metakey.ID, html2oUTF8(articleId.get().text()).trim());
+				meta.put(MetaData.Fields.ID, html2oUTF8(articleId.get().text()).trim());
 
 			final Elements articleName = articleHeader.select("span[itemprop=\"name\"]");
 			if (articleName.hasText())
-				meta.put(Metakey.NAME, html2oUTF8(articleName.text()).trim());
+				meta.put(MetaData.Fields.TITLE, html2oUTF8(articleName.text()).trim());
 		} catch (IOException e) {
 			throw new ExtractorException("I/O exception during extraction: " + e.getMessage(), e, uri);
 		}

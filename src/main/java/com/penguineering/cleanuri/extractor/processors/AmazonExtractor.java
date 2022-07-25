@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.penguineering.cleanuri.common.message.MetaData;
 import io.micronaut.context.annotation.Bean;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -38,7 +39,7 @@ public class AmazonExtractor implements Extractor {
 	}
 
 	@Override
-	public Map<Metakey, String> extractMetadata(URI uri) throws ExtractorException {
+	public Map<MetaData.Fields, String> extractMetadata(URI uri) throws ExtractorException {
 		if (uri == null)
 			throw new NullPointerException("URI argument must not be null!");
 
@@ -70,10 +71,10 @@ public class AmazonExtractor implements Extractor {
 			throw new IllegalArgumentException("Could not convert provided URL to https scheme!", e);
 		}
 
-		Map<Metakey, String> meta = new HashMap<>();
+		Map<MetaData.Fields, String> meta = new HashMap<>();
 
 		final String id = idRegex.getText(uriStr, 1);
-		meta.put(Metakey.ID, id.trim());
+		meta.put(MetaData.Fields.ID, id.trim());
 
 		try {
 			final Document doc = Jsoup.connect(url.toExternalForm()).get();
@@ -82,7 +83,7 @@ public class AmazonExtractor implements Extractor {
 			final String titleText = title.text();
 			if (descRegex.test(titleText)) {
 				final String desc = descRegex.getText(titleText, 1);
-				meta.put(Metakey.NAME, desc.trim());
+				meta.put(MetaData.Fields.TITLE, desc.trim());
 			}
 		} catch (IOException e) {
 			throw new ExtractorException("I/O exception during extraction: " + e.getMessage(), e, uri);

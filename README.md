@@ -31,6 +31,12 @@ dotenv ./mvnw mn:run
 
 Note that `.env` is part of the `.gitignore` and can be safely stored in the local working copy.
 
+### Dependencies
+
+The project depends on [cleanURI-common](https://github.com/penguineer/cleanURI-common) with a Maven artifact that is currently hosted as a GitHub package.
+Please refer to the [README from cleanURI-common](https://github.com/penguineer/cleanURI-common/blob/main/README.md) on how to resolve the dependency locally.
+
+
 ## Build
 
 The build is split into two stages:

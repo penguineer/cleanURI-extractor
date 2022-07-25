@@ -19,6 +19,14 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
           cache: 'maven'
+
+      - name: Maven Settings
+        uses: s4u/maven-settings-action@v2
+        with:
+          servers: '[{"id": "github", "username": "penguineer", "password": "${GITHUB_TOKEN_REF}"}]'
+          githubServer: false
       
       - name: Run Tests with Maven
         run: mvn --batch-mode --update-snapshots clean test
+        env:
+          GITHUB_TOKEN_REF: ${{ secrets.GH_MAVEN_TOKEN }}

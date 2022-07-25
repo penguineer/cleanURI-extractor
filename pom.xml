@@ -123,6 +123,12 @@
       <artifactId>java-verbal-expressions</artifactId>
       <version>1.8</version>
     </dependency>
+    <dependency>
+      <groupId>com.penguineering.cleanuri</groupId>
+      <artifactId>common</artifactId>
+      <version>0.1.0</version>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
 
   <build>

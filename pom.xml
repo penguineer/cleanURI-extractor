@@ -37,9 +37,8 @@
       <url>https://repo.maven.apache.org/maven2</url>
     </repository>
     <repository>
-      <id>github</id>
-      <name>GitHub penguineer Apache Maven Packages</name>
-      <url>https://maven.pkg.github.com/penguineer/maven-packages</url>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
     </repository>
   </repositories>
 
@@ -124,9 +123,9 @@
       <version>1.8</version>
     </dependency>
     <dependency>
-      <groupId>com.penguineering.cleanuri</groupId>
-      <artifactId>common</artifactId>
-      <version>0.1.0</version>
+      <groupId>com.github.penguineer</groupId>
+      <artifactId>cleanURI-common</artifactId>
+      <version>v0.1.1</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>

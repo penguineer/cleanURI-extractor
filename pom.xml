@@ -37,9 +37,8 @@
       <url>https://repo.maven.apache.org/maven2</url>
     </repository>
     <repository>
-      <id>github</id>
-      <name>GitHub penguineer Apache Maven Packages</name>
-      <url>https://maven.pkg.github.com/penguineer/maven-packages</url>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
     </repository>
   </repositories>
 

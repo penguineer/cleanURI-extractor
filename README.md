@@ -36,6 +36,9 @@ Note that `.env` is part of the `.gitignore` and can be safely stored in the loc
 The project depends on [cleanURI-common](https://github.com/penguineer/cleanURI-common) with a Maven artifact that is currently hosted as a GitHub package.
 Please refer to the [README from cleanURI-common](https://github.com/penguineer/cleanURI-common/blob/main/README.md) on how to resolve the dependency locally.
 
+The cleanURI-common dependency is resolved by [jitpack](https://jitpack.io/).
+Since these dependencies are built on-demand it may take a moment to download.
+
 
 ## Build
 

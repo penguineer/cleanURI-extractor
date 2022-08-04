@@ -34,24 +34,28 @@ public class ExtractionTaskHandler {
 
         final URI uri = task.getCanonizedURI();
 
-        if (!task.getRequest().getFields().isEmpty()) {
-            Optional<Extractor> extractor = extractors.stream()
-                    .filter(e -> e.isSuitable(uri))
-                    .findFirst();
+        try {
+            if (!task.getRequest().getFields().isEmpty()) {
+                Optional<Extractor> extractor = extractors.stream()
+                        .filter(e -> e.isSuitable(uri))
+                        .findFirst();
 
-            if (extractor.isPresent()) {
-                try {
-                    final Map<MetaData.Fields, String> meta = extractor.get().extractMetadata(uri);
-                    meta.forEach((key, value) -> taskBuilder.putMeta(
-                            key,
-                            MetaData.Builder.withValue(value).instance()
-                    ));
-                } catch (ExtractorException e) {
-                    taskBuilder.addError(e.getMessage());
+                if (extractor.isPresent()) {
+                    try {
+                        final Map<MetaData.Fields, String> meta = extractor.get().extractMetadata(uri);
+                        meta.forEach((key, value) -> taskBuilder.putMeta(
+                                key,
+                                MetaData.Builder.withValue(value).instance()
+                        ));
+                    } catch (ExtractorException e) {
+                        taskBuilder.addError(e.getMessage());
+                    }
+                } else {
+                    taskBuilder.addError("Could not find a matching extractor!");
                 }
-            } else {
-                taskBuilder.addError("Could not find a matching extractor!");
             }
+        } catch (IllegalArgumentException e) {
+            taskBuilder.addError(e.getMessage());
         }
 
         emitter.send(replyTo, correlationId, null, taskBuilder.instance());

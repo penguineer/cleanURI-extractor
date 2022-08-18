@@ -13,6 +13,10 @@ netty:
     allocator:
       max-order: 3
 
+endpoints:
+  health:
+    enabled: true
+
 # https://micronaut-projects.github.io/micronaut-rabbitmq/latest/guide/#config
 rabbitmq:
   host: ${AMQP_HOST}

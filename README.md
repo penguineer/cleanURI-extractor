@@ -18,6 +18,20 @@ This handler uses the [`reply-to` header](https://www.rabbitmq.com/direct-reply-
 
 ## Deployment
 
+### Run with Docker
+
+With the configuration stored in a file `.env`, the service can be run as follows:
+
+```bash
+docker run --rm \
+           --env-file .env \
+           mrtux/cleanrui-extractor
+```
+
+The service does not store any state and therefore needs no mount points or other persistence.
+
+Please make sure to pin the container to a specific version in a production environment.
+
 ### Development
 
 This project uses the [Micronaut Framework](https://micronaut.io/).

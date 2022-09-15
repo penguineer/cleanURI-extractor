@@ -12,7 +12,9 @@ Configuration is done using environment variables:
 * `AMQP_USER`: RabbitMQ user
 * `AMQP_PASS`: RabbitMQ password
 * `AMQP_VHOST`: RabbitMQ virtual host, defaults to '/'
-* `EXTRACTION_TASK_QUEUE`: AMQP queue for receiving extraction tasks
+* `EXTRACTION_TASK_QUEUE`: AMQP queue (inbound) for receiving extraction tasks from the [Canonizer](https://github.com/penguineer/cleanURI-canonizer)
+
+This handler uses the [`reply-to` header](https://www.rabbitmq.com/direct-reply-to.html) for result message binding and therefore has no outbound routing key in its configuration.
 
 ## Deployment
 

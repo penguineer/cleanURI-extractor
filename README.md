@@ -1,6 +1,6 @@
 # cleanURI - Extractor
 
-> Extract website information for the cleanURI service.
+> Extract website information for the [cleanURI](https://github.com/penguineer/cleanURI) service.
 
 
 ## Configuration

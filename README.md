@@ -94,6 +94,8 @@ If possible, please stick to the following guidelines:
 * Keep PRs reasonably small and their scope limited to a feature or module within the code.
 * If a large change is planned, it is best to open a feature request issue first, then link subsequent PRs to this issue, so that the PRs move the code towards the intended feature.
 
+:construction: Please note that the Canonizer/Extractor API are still work in progress. Any contributions to these should be coordinated to avoid going in different directions.
+
 
 ## License
 

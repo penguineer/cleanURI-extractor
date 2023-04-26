@@ -1,0 +1,23 @@
+name: Test and Publish
+
+on:
+  push:
+    branches:
+      - 'main'
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - 'main'
+
+jobs:
+  call-maven-test:
+    uses: penguineer/cleanURI/.github/workflows/reusable-maven-test.yml@main
+
+  call-docker-publish:
+    uses: penguineer/cleanURI/.github/workflows/reusable-docker-publish.yml@main
+    needs:
+      - call-maven-test
+    with:
+      image: mrtux/cleanuri-extractor
+    secrets: inherit

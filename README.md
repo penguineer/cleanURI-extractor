@@ -25,7 +25,7 @@ With the configuration stored in a file `.env`, the service can be run as follow
 ```bash
 docker run --rm \
            --env-file .env \
-           mrtux/cleanrui-extractor
+           mrtux/cleanuri-extractor
 ```
 
 The service does not store any state and therefore needs no mount points or other persistence.

@@ -25,7 +25,7 @@ import ru.lanwen.verbalregex.VerbalExpression;
  */
 @Bean
 public class ReicheltExtractor implements Extractor {
-	public static final String PREFIX = "http://www.reichelt.de/index.html?ARTICLE=";
+	public static final String PREFIX = "https://www.reichelt.de/index.html?ARTICLE=";
 
 	static final VerbalExpression artidRegex = VerbalExpression.regex().startOfLine().then("http").anything()
 			.then("://www.reichelt.de/").anything().then("-p").capture().anything().endCapture().then(".html")

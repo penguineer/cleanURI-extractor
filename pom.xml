@@ -136,7 +136,7 @@
     <dependency>
       <groupId>com.github.penguineer</groupId>
       <artifactId>cleanURI-site-implementations</artifactId>
-      <version>0.2.0</version>
+      <version>0.3.0</version>
       <scope>runtime</scope>
     </dependency>
   </dependencies>

@@ -130,7 +130,7 @@
     <dependency>
       <groupId>com.github.penguineer</groupId>
       <artifactId>cleanURI-common</artifactId>
-      <version>0.3.0</version>
+      <version>0.4.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

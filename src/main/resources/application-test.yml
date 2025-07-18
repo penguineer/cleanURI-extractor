@@ -1,6 +1,8 @@
 micronaut:
   application:
     name: cleanURI-extractor
+  server:
+    port: -1 # Disable server port for testing
   router:
     static-resources:
       swagger:

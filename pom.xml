@@ -21,7 +21,7 @@
     <micronaut.runtime>netty</micronaut.runtime>
     <micronaut.aot.enabled>false</micronaut.aot.enabled>
     <micronaut.aot.packageName>com.penguineering.cleanuri.aot.generated</micronaut.aot.packageName>
-    <exec.mainClass>com.penguineering.cleanuri.Application</exec.mainClass>
+    <exec.mainClass>com.penguineering.cleanuri.extractor.Application</exec.mainClass>
   </properties>
 
   <repositories>

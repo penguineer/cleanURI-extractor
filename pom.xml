@@ -35,6 +35,7 @@
     </repository>
   </repositories>
 
+  <!-- Dependencies without a version tag are controlled by Micronaut -->
   <dependencies>
     <dependency>
       <groupId>io.micronaut</groupId>
@@ -50,21 +51,6 @@
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-jackson-databind</artifactId>
       <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.yaml</groupId>
-      <artifactId>snakeyaml</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.fusesource.jansi</groupId>
-        <artifactId>jansi</artifactId>
-        <version>2.4.2</version>
     </dependency>
     <dependency>
       <groupId>io.micronaut</groupId>
@@ -93,6 +79,24 @@
     <dependency>
       <groupId>io.swagger.core.v3</groupId>
       <artifactId>swagger-annotations</artifactId>
+      <version>2.2.39</version>
+    </dependency>
+    <dependency>
+        <groupId>org.yaml</groupId>
+        <artifactId>snakeyaml</artifactId>
+        <version>2.5</version>
+        <scope>runtime</scope>
+    </dependency>
+    <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>1.5.20</version>
+        <scope>runtime</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.fusesource.jansi</groupId>
+        <artifactId>jansi</artifactId>
+        <version>2.4.2</version>
     </dependency>
     <dependency>
       <groupId>com.github.penguineer</groupId>

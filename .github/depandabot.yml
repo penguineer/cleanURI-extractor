@@ -1,0 +1,15 @@
+version: 2
+updates:
+  # Note: GitHub workflows are centralized in the cleanURI repository
+  - package-ecosystem: "maven"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"

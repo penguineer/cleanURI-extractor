@@ -2,7 +2,7 @@
 # This dockerfile expects a compiled artifact in the target folder.
 # Call "mvn clean package" first!
 #
-FROM openjdk:21-jdk-slim
+FROM eclipse-temurin:25-jre
 
 RUN apt-get update && apt-get install -y \
     curl \
